@@ -49,6 +49,11 @@
                 "glob": "**/*",
                 "input": "node_modules/@progress/kendo-theme-material/dist",
                 "output": "/assets/kendo-theme-material/dist"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/custom-material-theme/dist",
+                "output": "/assets/custom-material-theme/dist"
               }
             ],
             "styles": ["src/styles/main.scss"],

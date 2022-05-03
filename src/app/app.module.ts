@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { NgModule, LOCALE_ID } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
@@ -48,6 +48,8 @@ import "hammerjs";
 import "@progress/kendo-angular-intl/locales/en/all";
 import "@progress/kendo-angular-intl/locales/es/all";
 import "@progress/kendo-angular-intl/locales/fr/all";
+import { ApiUrlInterceptor } from "./interceptors/api-url.interceptor";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -87,6 +89,16 @@ import "@progress/kendo-angular-intl/locales/fr/all";
   providers: [
     { provide: MessageService, useClass: CustomMessagesService },
     { provide: LOCALE_ID, useValue: "en-US" },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiUrlInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
