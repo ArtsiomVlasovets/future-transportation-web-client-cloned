@@ -1,3 +1,7 @@
+import { CommonPageComponent } from "./shared/components/common-page/common-page.component";
+import { SharedModule } from "./shared/modules/shared/shared.module";
+import { ZonesComponent } from "./components/zones/zones.component";
+import { environment } from "./../environments/environment";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { NgModule, LOCALE_ID } from "@angular/core";
@@ -11,7 +15,6 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { CardComponent } from "./components/planning/cards/card.component";
 import { PlanningComponent } from "./components/planning/planning.component";
 import { ProfileComponent } from "./components/profile/profile.component";
-import { InfoComponent } from "./components/info/info.component";
 import { HeaderComponent } from "./header/header.component";
 import { TeamComponent } from "./components/team/team.component";
 import { CustomMessagesService } from "./services/custom-messages.service";
@@ -34,22 +37,19 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { NotificationModule } from "@progress/kendo-angular-notification";
 import { MessageService } from "@progress/kendo-angular-l10n";
-
-const drawerRoutes = [
-  { path: "", component: TeamComponent },
-  { path: "dashboard", component: DashboardComponent },
-  { path: "planning", component: PlanningComponent },
-  { path: "profile", component: ProfileComponent },
-  { path: "zones", component: InfoComponent },
-];
-
 import "hammerjs";
-
 import "@progress/kendo-angular-intl/locales/en/all";
 import "@progress/kendo-angular-intl/locales/es/all";
 import "@progress/kendo-angular-intl/locales/fr/all";
-import { ApiUrlInterceptor } from "./interceptors/api-url.interceptor";
-import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { LoginComponent } from "./components/login/login.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { NgxsModule, NoopNgxsExecutionStrategy } from "@ngxs/store";
+import { GLOBAL_STATES } from "./shared/state/global-states";
+import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
+import { ApiUrlInterceptor } from "./core/interceptors/api-url.interceptor";
+import { CommonLayoutComponent } from "./components/common-layout/common-layout.component";
+import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
+import { NgxsRouterPluginModule } from "@ngxs/router-plugin";
 
 @NgModule({
   declarations: [
@@ -59,32 +59,30 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     CardComponent,
     PlanningComponent,
     ProfileComponent,
-    HeaderComponent,
-    InfoComponent,
+    ZonesComponent,
     TeamComponent,
+    LoginComponent,
+    CommonPageComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    GridModule,
-    PDFModule,
-    ExcelModule,
-    LabelModule,
-    LayoutModule,
-    SchedulerModule,
-    ButtonsModule,
-    EditorModule,
-    FileSelectModule,
-    HttpClientModule,
-    ChartsModule,
-    IntlModule,
-    DateInputsModule,
-    InputsModule,
-    DropDownsModule,
-    RouterModule.forRoot(drawerRoutes),
-    NotificationModule,
+    AppRoutingModule,
+    SharedModule,
+    // Add satte file
+    NgxsModule.forRoot([...GLOBAL_STATES], {
+      developmentMode: !environment.production,
+      executionStrategy: NoopNgxsExecutionStrategy,
+    }),
+    NgxsStoragePluginModule.forRoot({
+      // key: ["currentUser.userId", "currentUser.authToken", "currentUser.type"],
+      key: [
+        "currentUser.userDetails",
+        "currentUser.authToken",
+        "currentUser.type",
+      ],
+    }),
+    NgxsRouterPluginModule.forRoot(),
   ],
   providers: [
     { provide: MessageService, useClass: CustomMessagesService },

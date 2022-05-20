@@ -1,0 +1,9 @@
+.avatar-box {
+  position: relative;
+  kendo-dropdownlist {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 5px;
+  }
+}
