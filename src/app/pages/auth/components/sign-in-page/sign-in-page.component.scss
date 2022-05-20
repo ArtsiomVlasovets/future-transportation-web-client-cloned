@@ -1,0 +1,29 @@
+:host {
+  ::ng-deep {
+    .mat-card-header {
+      margin-right: -20px;
+    }
+  }
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-submit {
+  display: block;
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+.k-avatar {
+  margin-left: 80px;
+  font-size: 30px;
+}
+.example {
+  display: flex;
+  justify-content: center;
+}
+.k-form {
+  width: 240px;
+}

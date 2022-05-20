@@ -42,6 +42,13 @@
       </kendo-dropdownlist>
     </div>
 
-    <kendo-avatar imageSrc="assets/user.jpg" shape="circle"> </kendo-avatar>
+    <div class="avatar-box">
+      <kendo-avatar imageSrc="assets/user.jpg" shape="circle"> </kendo-avatar>
+      <kendo-dropdownlist
+        [data]="listItems"
+        (valueChange)="changeProfileDropdown($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
   </div>
 </div>

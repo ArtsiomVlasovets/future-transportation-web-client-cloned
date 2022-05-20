@@ -1,13 +1,13 @@
-import { HttpService } from "./../../services/http.service";
+import { HttpService } from "../../services/http.service";
 import { Component } from "@angular/core";
 import { MessageService } from "@progress/kendo-angular-l10n";
 import { CustomMessagesService } from "src/app/services/custom-messages.service";
 
 @Component({
-  selector: "app-info-component",
-  templateUrl: "./info.component.html",
+  selector: "app-zones-component",
+  templateUrl: "./zones.component.html",
 })
-export class InfoComponent {
+export class ZonesComponent {
   public customMsgService: CustomMessagesService;
   public zones = [];
 
