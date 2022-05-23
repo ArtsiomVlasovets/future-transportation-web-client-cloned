@@ -23,7 +23,7 @@ const routes: Routes = [
       {
         path: "",
         pathMatch: "full",
-        redirectTo: RouteName.Portal,
+        redirectTo: `${RouteName.Portal}/zones`,
       },
       {
         path: RouteName.Portal,

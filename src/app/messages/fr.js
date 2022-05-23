@@ -43,6 +43,9 @@ export const frCustomMessages = {
   gridSearch: "Rechercher dans toutes les colonnes ...",
   exportExcel: "Exporter vers Excel",
   exportPdf: "Exporter au format PDF",
+  zones: "Zones Fr",
+  createdAt: "Created At Fr",
+  updatedAt: "Updated At Fr",
 };
 
 // Kendo Angular Component Messages
