@@ -164,7 +164,7 @@ export class CurrentUserState {
     return this.authHttpService.signIn(payload.username, payload.password).pipe(
       tap((response: SignInResponse) => {
         ctx.patchState({
-          authToken: `${response.token_type}${response.access_token}`,
+          authToken: `${response.token_type} ${response.access_token}`,
           userDetails: { name: response.username },
           isUserInit: true,
         });
