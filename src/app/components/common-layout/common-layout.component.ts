@@ -55,6 +55,8 @@ export class CommonLayoutComponent implements OnInit {
     window.addEventListener("resize", () => {
       this.setDrawerConfig();
     });
+
+    this.onSelect(this.items[0])
   }
 
   ngOnDestroy() {
@@ -74,36 +76,36 @@ export class CommonLayoutComponent implements OnInit {
 
   public drawerItems() {
     return [
-      {
-        text: this.customMsgService.translate("team"),
-        icon: "k-i-grid",
-        path: "/portal",
-        selected: true,
-      },
-      {
-        text: this.customMsgService.translate("dashboard"),
-        icon: "k-i-chart-line-markers",
-        path: "/portal/dashboard",
-        selected: false,
-      },
-      {
-        text: this.customMsgService.translate("planning"),
-        icon: "k-i-calendar",
-        path: "/portal//planning",
-        selected: false,
-      },
-      {
-        text: this.customMsgService.translate("profile"),
-        icon: "k-i-user",
-        path: "/portal//profile",
-        selected: false,
-      },
-      { separator: true },
+      // {
+      //   text: this.customMsgService.translate("team"),
+      //   icon: "k-i-grid",
+      //   path: "/portal",
+      //   selected: true,
+      // },
+      // {
+      //   text: this.customMsgService.translate("dashboard"),
+      //   icon: "k-i-chart-line-markers",
+      //   path: "/portal/dashboard",
+      //   selected: false,
+      // },
+      // {
+      //   text: this.customMsgService.translate("planning"),
+      //   icon: "k-i-calendar",
+      //   path: "/portal//planning",
+      //   selected: false,
+      // },
+      // {
+      //   text: this.customMsgService.translate("profile"),
+      //   icon: "k-i-user",
+      //   path: "/portal//profile",
+      //   selected: false,
+      // },
+      // { separator: true },
       {
         text: this.customMsgService.translate("zones"),
         icon: "k-i-information",
         path: "/portal//zones",
-        selected: false,
+        selected: true,
       },
     ];
   }
@@ -113,6 +115,7 @@ export class CommonLayoutComponent implements OnInit {
   }
 
   public onSelect(ev: DrawerSelectEvent): void {
+    debugger
     this.router.navigate([ev.item.path]);
     this.selected = ev.item.text;
   }
