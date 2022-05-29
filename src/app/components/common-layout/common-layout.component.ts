@@ -50,13 +50,13 @@ export class CommonLayoutComponent implements OnInit {
 
     this.customMsgService.localeChange.subscribe(() => {
       this.items = this.drawerItems();
+
     });
 
     window.addEventListener("resize", () => {
       this.setDrawerConfig();
     });
 
-    this.onSelect(this.items[0])
   }
 
   ngOnDestroy() {
@@ -76,31 +76,6 @@ export class CommonLayoutComponent implements OnInit {
 
   public drawerItems() {
     return [
-      // {
-      //   text: this.customMsgService.translate("team"),
-      //   icon: "k-i-grid",
-      //   path: "/portal",
-      //   selected: true,
-      // },
-      // {
-      //   text: this.customMsgService.translate("dashboard"),
-      //   icon: "k-i-chart-line-markers",
-      //   path: "/portal/dashboard",
-      //   selected: false,
-      // },
-      // {
-      //   text: this.customMsgService.translate("planning"),
-      //   icon: "k-i-calendar",
-      //   path: "/portal//planning",
-      //   selected: false,
-      // },
-      // {
-      //   text: this.customMsgService.translate("profile"),
-      //   icon: "k-i-user",
-      //   path: "/portal//profile",
-      //   selected: false,
-      // },
-      // { separator: true },
       {
         text: this.customMsgService.translate("zones"),
         icon: "k-i-information",
