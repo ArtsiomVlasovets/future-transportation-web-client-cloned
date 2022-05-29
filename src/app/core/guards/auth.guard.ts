@@ -27,8 +27,6 @@ export class AuthGuard implements CanActivate {
       CurrentUserState.getCurrentUserIsAuthenticated
     );
 
-    console.log("currentUserIsAuthenticated :>> ", currentUserIsAuthenticated);
-
     if (!currentUserIsAuthenticated) {
       this.notificationService.warning(NOTIFICATIONS.NotAuthanticated);
 

@@ -30,11 +30,17 @@ export class TeamComponent implements OnInit {
     this.gridView = this.gridData.slice(25, 50);
   }
 
-  // Update Grid collection during changing My Team/All Team
   public onTeamChange(pageSize: number): void {
     pageSize === 25
       ? (this.gridView = this.gridData.slice(pageSize, pageSize * 2))
       : (this.gridView = this.gridData.slice(0, pageSize));
+  }
+
+  public flagURL(dataItem: any): string {
+    const code: string = dataItem.country;
+    const image: any = images;
+
+    return image[code];
   }
 
   public onFilter(inputValue: string): void {
@@ -60,13 +66,6 @@ export class TeamComponent implements OnInit {
 
   public photoURL(dataItem: any): string {
     const code: string = dataItem.imgId + dataItem.gender;
-    const image: any = images;
-
-    return image[code];
-  }
-
-  public flagURL(dataItem: any): string {
-    const code: string = dataItem.country;
     const image: any = images;
 
     return image[code];
