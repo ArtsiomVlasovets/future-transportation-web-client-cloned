@@ -15,6 +15,9 @@ import { Subject } from "rxjs";
 const createFormGroup = (dataItem: any) =>
   new FormGroup({
     name: new FormControl(dataItem.name, Validators.required),
+    short_name: new FormControl(dataItem.short_name, Validators.required),
+    alcohol_permission: new FormControl(dataItem.alcohol_permission, Validators.required),
+    MC_DOT_required: new FormControl(dataItem.MC_DOT_required, Validators.required),
   });
 
 const hasClass = (el: { className: string }, className: string | RegExp) =>
@@ -32,14 +35,14 @@ const isChildOf = (el: { parentElement: any }, className: string) => {
 };
 
 @Component({
-  selector: "app-zones-component",
-  templateUrl: "./zones.component.html",
-  styleUrls: ["./zones.component.scss"],
+  selector: "app-countries-component",
+  templateUrl: "./countries.component.html",
+  styleUrls: ["./countries.component.scss"],
 })
-export class ZonesComponent {
+export class CountriesComponent {
   //TODO add types
   public customMsgService: CustomMessagesService;
-  public zones = [];
+  public countries = [];
   public currentDataItem: any;
   public loading: boolean = false;
   public gridData: any[] = [];
@@ -80,7 +83,7 @@ export class ZonesComponent {
     private renderer: Renderer2
   ) {
     this.customMsgService = this.msgService as CustomMessagesService;
-    this.getZones();
+    this.getCountries();
 
     this.renderer.listen("document", "click", ({ target }) => {
       this.currentTarget = target;
@@ -101,9 +104,9 @@ export class ZonesComponent {
       .pipe(
         switchMap(() => {
           if (this.isNew) {
-            return this.httpService.saveZone(this.formGroup?.value, this.isNew);
+            return this.httpService.saveCountry(this.formGroup?.value, this.isNew);
           } else {
-            return this.httpService.saveZone(
+            return this.httpService.saveCountry(
               this.formGroup?.value,
               this.isNew,
               this.currentDataItem.id,
@@ -113,7 +116,7 @@ export class ZonesComponent {
         })
       )
       .subscribe((data) => {
-        this.getZones();
+        this.getCountries();
         this.formGroup = null;
         // this.gridView = [...data.items]
       });
@@ -206,7 +209,7 @@ export class ZonesComponent {
     this.closeEditor(this.grid);
   }
 
-  public getZones(): void {
+  public getCountries(): void {
     this.loading = true;
 
     const payload = {
@@ -215,8 +218,8 @@ export class ZonesComponent {
       filters: "",
     };
 
-    this.httpService.fetchZones(payload).subscribe((data) => {
-      this.zones = data;
+    this.httpService.fetchCountries(payload).subscribe((data) => {
+      this.countries = data;
       this.gridView = [...data.items];
       this.loading = false;
     });

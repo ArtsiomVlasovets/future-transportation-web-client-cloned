@@ -1,0 +1,191 @@
+<div class="card-component">
+    <kendo-grid
+      #grid
+      [kendoGridBinding]="gridView"
+      kendoGridSelectBy="id"
+      [selectedKeys]="mySelection"
+      [pageSize]="10"
+      [pageable]="true"
+      [sortable]="true"
+      [groupable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [height]="480"
+      [columnMenu]="{ filter: true }"
+      (cellClick)="onClickEvent($event)"
+      (dblclick)="onDblClick()"
+      (add)="addHandler($event)"
+    >
+      <kendo-grid-messages
+        groupPanelEmpty="Group by column (Drag a column header and drop it here to group by that column)"
+      >
+        <label id="dedov">Password strength</label>
+      </kendo-grid-messages>
+  
+  
+      <kendo-grid-checkbox-column
+        class="k-grid-ignore-click"
+        [width]="40"
+        [headerClass]="{ 'text-center': true }"
+        [class]="{ 'text-center': true }"
+        [resizable]="true"
+        [columnMenu]="false"
+        [showSelectAll]="true"
+      >
+      </kendo-grid-checkbox-column>
+  
+      <ng-template kendoGridToolbarTemplate>
+        <button kendoGridAddCommand *ngIf="!formGroup">
+          Add <span class="k-icon k-i-plus"></span>
+        </button>
+        <!-- <button kendoGridEditCommand *ngIf="!formGroup">Edit <span class="k-icon k-i-pencil k-flip-v"></span></button> -->
+        <!-- <button kendoGridEditCommand *ngIf="!formGroup">Delete <span class="k-icon k-i-close"></span></button> -->
+      </ng-template>
+  
+      <!-- <kendo-grid-column-group
+        *ngIf="!loading"
+        [title]="customMsgService.translate('zones')"
+        [columnMenu]="false"
+      > -->
+      <kendo-grid-column
+      field="state.name"
+      title="State"
+      [width]="220"
+    >
+    </kendo-grid-column>
+
+      <kendo-grid-column
+        field="name"
+        [title]="customMsgService.translate('name')"
+        [width]="220"
+      >
+      </kendo-grid-column>
+
+
+      <kendo-grid-column
+        field="latitude"
+        title="Latitude"
+        [width]="220"
+      >
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="longitude"
+        title="Longitude"
+        [width]="220"
+      >
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="coordinates_update_datetime"
+        title="Coordinates Update Datetime"
+        [width]="100"
+        [class]="{ 'text-center': true }"
+        [resizable]="false"
+      >
+        <ng-container>
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.coordinates_update_datetime | date }}
+          </ng-template>
+        </ng-container>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="google_map_place_id"
+        title="Google Map Place Id"
+        [width]="220"
+      >
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="created_at"
+        [title]="customMsgService.translate('createdAt')"
+        [width]="100"
+        [class]="{ 'text-center': true }"
+        [resizable]="false"
+      >
+        <ng-container>
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.created_at | date }}
+          </ng-template>
+        </ng-container>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="updated_at"
+        [title]="customMsgService.translate('updatedAt')"
+        [width]="100"
+        [class]="{ 'text-center': true }"
+        [resizable]="false"
+        filter="boolean"
+      >
+        <ng-container>
+          <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.updated_at | date }}
+          </ng-template>
+        </ng-container>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="command" [width]="140">
+        <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem let-rowIndex="rowIndex">
+          <button kendoGridEditCommand type="button" (click)="editClick(rowIndex, dataItem)" [primary]="true">
+            Edit <span class="k-icon k-i-pencil k-flip-v"></span>
+          </button>
+          <button kendoGridRemoveCommand type="button">
+            Remove <span class="k-icon k-i-close"></span>
+          </button>
+          <button
+            kendoGridSaveCommand
+            type="button"
+            (click)="saveCurrent()"
+            [disabled]="!!formGroup?.invalid"
+          >
+            {{ isNew ? "Save" : "Update" }}
+            <span
+              *ngIf="isNew; else saveIcon"
+              class="k-icon k-i-save k-i-floppy"
+            ></span>
+            <ng-template #saveIcon>
+              <span class="k-icon k-i-save k-i-floppy"></span>
+            </ng-template>
+          </button>
+          <button kendoGridCancelCommand type="button" (click)="cancelHandler()">
+            {{ isNew ? "Cancel" : "Discard changes" }}
+            <span class="k-icon k-i-cancel-outline"></span>
+          </button>
+        </ng-template>
+      </kendo-grid-command-column>
+      <!-- </kendo-grid-column-group> -->
+  
+      <!-- TODO - add loading spinner -->
+      <!-- <ng-template #spinner>
+        <div class="k-block">
+          <kendo-loader
+            [type]="loader.type"
+            [themeColor]="loader.themeColor"
+            [size]="loader.size"
+          >
+          </kendo-loader>
+        </div>
+      </ng-template> -->
+      <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+    </kendo-grid>
+  
+    <app-window-dialog
+      #windowDialog
+      *ngIf="windowOpen"
+      [width]="500"
+      [minHeight]="210"
+      title="Edit Confirmation"
+      (close)="close()"
+    >
+      <p>
+        "Save changes?
+      </p>
+  
+      <kendo-dialog-actions>
+        <button kendoButton (click)="no()">No</button>
+        <button kendoButton (click)="yes()" [primary]="true">Yes</button>
+        <button kendoButton (click)="cancelPopup()">cancel</button>
+      </kendo-dialog-actions>
+    </app-window-dialog>
+  </div>
+  

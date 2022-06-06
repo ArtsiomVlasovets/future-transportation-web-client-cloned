@@ -6,6 +6,8 @@ import { TeamComponent } from "./../../../components/team/team.component";
 import { CommonLayoutComponent } from "./../../../components/common-layout/common-layout.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { CountriesComponent } from "src/app/components/countries/countries.component";
+import { CitiesComponent } from "src/app/components/cities/cities.component";
 // import { RouteName } from "../../models/route-name.enum";
 
 const routes: Routes = [
@@ -14,7 +16,7 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     children: [
       {
-        path: "",
+        path: "team",
         component: TeamComponent,
       },
       {
@@ -32,6 +34,14 @@ const routes: Routes = [
       {
         path: "zones",
         component: ZonesComponent,
+      },
+      {
+        path: "countries",
+        component: CountriesComponent,
+      },
+      {
+        path: "cities",
+        component: CitiesComponent,
       },
     ],
   },

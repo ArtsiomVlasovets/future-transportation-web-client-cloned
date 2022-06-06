@@ -17,7 +17,7 @@ import { Observable } from "rxjs";
   styleUrls: ["./common-layout.component.scss"],
 })
 export class CommonLayoutComponent implements OnInit {
-  public selected = "Team";
+  public selected = "Zones";
   public items: Array<any> = [];
   public customMsgService: CustomMessagesService;
   public mode: DrawerMode = "push";
@@ -79,8 +79,20 @@ export class CommonLayoutComponent implements OnInit {
       {
         text: this.customMsgService.translate("zones"),
         icon: "k-i-information",
-        path: "/portal//zones",
+        path: "/portal/zones",
         selected: true,
+      },
+      {
+        text: this.customMsgService.translate("countries"),
+        icon: "k-i-globe-outline",
+        path: "/portal/countries",
+        selected: false,
+      },
+      {
+        text: this.customMsgService.translate("cities"),
+        icon: "k-i-home",
+        path: "/portal/cities",
+        selected: false,
       },
     ];
   }
@@ -90,7 +102,6 @@ export class CommonLayoutComponent implements OnInit {
   }
 
   public onSelect(ev: DrawerSelectEvent): void {
-    debugger
     this.router.navigate([ev.item.path]);
     this.selected = ev.item.text;
   }

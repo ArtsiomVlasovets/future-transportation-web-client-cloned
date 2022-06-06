@@ -16,11 +16,16 @@ import { LabelModule } from "@progress/kendo-angular-label";
 import { NgModule } from "@angular/core";
 import { ExcelModule, GridModule } from "@progress/kendo-angular-grid";
 import { PDFModule } from "@progress/kendo-angular-scheduler";
+import { TooltipsModule } from "@progress/kendo-angular-tooltip";
+import { WindowDialogComponent } from "../../components/window-dialog/window-dialog.component";
+import { WindowModule } from "@progress/kendo-angular-dialog";
 // TODO for loading spinner
 // import { IndicatorsModule } from "@progress/kendo-angular-indicators";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    WindowDialogComponent
+  ],
   imports: [
     GridModule,
     PDFModule,
@@ -40,6 +45,8 @@ import { PDFModule } from "@progress/kendo-angular-scheduler";
     NotificationModule,
     FormsModule,
     ReactiveFormsModule,
+    TooltipsModule,
+    WindowModule,
     // IndicatorsModule
   ],
   exports: [
@@ -61,6 +68,9 @@ import { PDFModule } from "@progress/kendo-angular-scheduler";
     NotificationModule,
     FormsModule,
     ReactiveFormsModule,
+    TooltipsModule,
+    WindowModule,
+    WindowDialogComponent
     // IndicatorsModule
   ],
 })
