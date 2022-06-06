@@ -50,6 +50,9 @@ import { ApiUrlInterceptor } from "./core/interceptors/api-url.interceptor";
 import { CommonLayoutComponent } from "./components/common-layout/common-layout.component";
 import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
 import { NgxsRouterPluginModule } from "@ngxs/router-plugin";
+import { CountriesComponent } from './components/countries/countries.component';
+import { CitiesComponent } from './components/cities/cities.component';
+// import { WindowDialogComponent } from './shared/components/window-dialog/window-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,8 @@ import { NgxsRouterPluginModule } from "@ngxs/router-plugin";
     TeamComponent,
     LoginComponent,
     CommonPageComponent,
+    CountriesComponent,
+    CitiesComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,9 @@ export const esCustomMessages = {
   teamMembers: "Miembros del equipo",
   dashboard: "Tablero",
   planning: "Planificación",
-  zones: "Zones",
+  zones: "Zones - ES",
+  countries: "Countries - ES",
+  cities: "Cities - ES",
   profile: "Perfil",
   language: "Idioma",
   trend: "Tendencia",
@@ -31,6 +33,7 @@ export const esCustomMessages = {
   team: "Equipo",
   employee: "Empleado",
   contactName: "Nombre de contacto",
+  name: "Name - ES",
   jobTitle: "Título del trabajo",
   status: "Estado",
   performance: "Rendimiento",
@@ -43,7 +46,6 @@ export const esCustomMessages = {
   gridSearch: "Buscar en todas las columnas ...",
   exportExcel: "Exportar a Excel",
   exportPdf: "Exportar a PDF",
-  zones: "Zones Es",
   createdAt: "Created At Es",
   updatedAt: "Updated At Es"
 };

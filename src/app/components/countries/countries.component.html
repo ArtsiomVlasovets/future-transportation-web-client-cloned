@@ -48,6 +48,28 @@
       [columnMenu]="false"
     > -->
     <kendo-grid-column
+      field="short_name"
+      title="Short Name"
+      [width]="220"
+    >
+  </kendo-grid-column>
+
+
+    <kendo-grid-column
+      field="alcohol_permission"
+      title="Alcohol Permission"
+      [width]="100"
+    >
+  </kendo-grid-column>
+
+    <kendo-grid-column
+      field="MC_DOT_required"
+      title="MC DOT required"
+      [width]="100"
+    >
+  </kendo-grid-column>
+
+    <kendo-grid-column
       field="name"
       [title]="customMsgService.translate('name')"
       [width]="220"

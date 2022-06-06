@@ -6,6 +6,8 @@ export const enCustomMessages = {
   planning: "Planning",
   profile: "Profile",
   zones: "Zones",
+  countries: "Countries",
+  cities: "Cities",
   language: "Language",
   trend: "Trend",
   volume: "Volume",
@@ -31,6 +33,7 @@ export const enCustomMessages = {
   team: "Team",
   employee: "Employee",
   contactName: "Contact Name",
+  name: "Name",
   jobTitle: "Job Title",
   status: "Status",
   performance: "Performance",
@@ -43,7 +46,6 @@ export const enCustomMessages = {
   gridSearch: "Search in all columns...",
   exportExcel: "Export to Excel",
   exportPdf: "Export to PDF",
-  zones: "Zones",
   createdAt: "Created At",
   updatedAt: "Updated At"
 };
@@ -52,7 +54,7 @@ export const enCustomMessages = {
 export const enComponentMessages = {
   // Grid
   "kendo.grid.groupPanelEmpty":
-    "Drag a column header and drop it here to group by that column",
+  "Group by (Drag a column header and drop it here to group by that column):",
   "kendo.grid.noRecords": "No records available.",
   "kendo.grid.pagerFirstPage": "Go to the first page",
   "kendo.grid.pagerPreviousPage": "Go to the previous page",
