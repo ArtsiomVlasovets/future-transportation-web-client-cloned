@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiUrl: "https://app.futuretrans.ca/ft-dev-wp-api/hs/wp/",
-  apiUrl: "http://5.187.5.227:8000/api/v1/",
+  apiUrl: "https://5.187.5.227/api/v1/",
   logRocketAppId: null,
 };
 

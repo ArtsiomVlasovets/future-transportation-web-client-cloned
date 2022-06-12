@@ -110,7 +110,7 @@ export class CitiesComponent {
               this.formGroup?.value,
               this.isNew,
               this.currentDataItem.id,
-              this.currentDataItem.version
+              this.currentDataItem.version,
             );
           }
         })
