@@ -1,0 +1,16 @@
+<!-- <kendo-menu
+  [items]="items"
+  (select)="onSelect($event)"
+  [vertical]="true"
+  style="display: inline-block"
+>
+</kendo-menu> -->
+
+<kendo-menu [items]="items" (select)="onSelect($event)">
+  <ng-template kendoMenuItemTemplate let-item="item">
+    <!-- <span [ngClass]="iconClass(item)"></span> -->
+    {{ item.text }}
+  </ng-template>
+</kendo-menu>
+
+<router-outlet></router-outlet>

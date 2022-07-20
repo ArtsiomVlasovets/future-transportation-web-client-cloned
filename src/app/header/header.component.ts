@@ -1,10 +1,13 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Inject,
   Input,
   LOCALE_ID,
   Output,
+  SimpleChanges,
 } from "@angular/core";
 import { CldrIntlService, IntlService } from "@progress/kendo-angular-intl";
 import { MessageService } from "@progress/kendo-angular-l10n";
@@ -17,6 +20,7 @@ import { SignOutAction } from "../shared/state/current-user/current-user.actions
   selector: "app-header-component",
   templateUrl: "./header.commponent.html",
   styleUrls: ["./header.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   @Output() public toggle = new EventEmitter();
@@ -24,7 +28,7 @@ export class HeaderComponent {
   // @Input() isUserInit = false;
 
   public customMsgService: CustomMessagesService;
-
+  public currentPage = "";
   public selectedLanguage = { locale: "English", localeId: "en-US" };
   public locales = locales;
   public popupSettings = { width: "150" };
@@ -53,7 +57,8 @@ export class HeaderComponent {
     public messages: MessageService,
     private store: Store,
     @Inject(LOCALE_ID) public localeId: string,
-    public intlService: IntlService
+    public intlService: IntlService,
+    private cdf: ChangeDetectorRef
   ) {
     this.localeId = this.selectedLanguage.localeId;
     this.setLocale(this.localeId);
@@ -62,6 +67,18 @@ export class HeaderComponent {
     this.customMsgService.language = this.selectedLanguage.localeId;
 
     this.initCustomiztion();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes?.["selectedPage"]?.currentValue !==
+        changes?.["selectedPage"]?.previousValue ||
+      changes?.["selectedPage"]
+    ) {
+      this.currentPage = changes?.["selectedPage"].currentValue;
+      console.log("this.currentPage :>> ", this.currentPage);
+      this.cdf.markForCheck();
+    }
   }
 
   public initCustomiztion() {

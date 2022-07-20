@@ -1,13 +1,13 @@
-import { PagingResponse } from "../../../core/models/responses/paging.response";
-import { BasePagingState } from "../../../core/base/base-paging-state";
-import { PAGING_DEFAULT_OPTIONS } from "../../../core/constants";
-import { PagingStateModel } from "../../../core/models/paging-state.model";
-import { Countries } from "../../../core/models/countries.model";
-import { CountriesHttpService } from "../../../core/service/http/countries-http.service";
-import { Action, State, StateContext, Store } from "@ngxs/store";
-import { LoadCountriesAction } from "./countries.actions";
-import { Injectable } from "@angular/core";
-import { finalize, tap } from "rxjs/operators";
+import { PagingResponse } from '../../../core/models/responses/paging.response';
+import { BasePagingState } from '../../../core/base/base-paging-state';
+import { PAGING_DEFAULT_OPTIONS } from '../../../core/constants';
+import { PagingStateModel } from '../../../core/models/paging-state.model';
+import { Countries } from '../../../core/models/countries.model';
+import { CountriesHttpService } from '../../../core/service/http/countries-http.service';
+import { Action, State, StateContext, Store } from '@ngxs/store';
+import { LoadCountriesAction } from './countries.actions';
+import { Injectable } from '@angular/core';
+import { finalize, tap } from 'rxjs/operators';
 
 export interface CountriesStateModel extends PagingStateModel<Countries> {
   pageSubject: string;
@@ -22,12 +22,12 @@ const initialState: CountriesStateModel = {
   pageIndex: 0,
   itemsLoading: false,
   itemsLoaded: false,
-  pageSubject: "",
+  pageSubject: '',
   filter: {},
 };
 
 @State<CountriesStateModel>({
-  name: "countries",
+  name: 'countries',
   defaults: initialState,
 })
 @Injectable()
@@ -79,7 +79,7 @@ export class CountriesState extends BasePagingState {
     const payload = {
       page: 1,
       limit: 20,
-      filters: "",
+      filters: '',
     };
 
     return this.countriesHttpService.getCountries(payload, state.filter).pipe(

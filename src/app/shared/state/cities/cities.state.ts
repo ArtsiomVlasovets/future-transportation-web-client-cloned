@@ -1,13 +1,13 @@
-import { PagingResponse } from "../../../core/models/responses/paging.response";
-import { BasePagingState } from "../../../core/base/base-paging-state";
-import { PAGING_DEFAULT_OPTIONS } from "../../../core/constants";
-import { PagingStateModel } from "../../../core/models/paging-state.model";
-import { Cities } from "../../../core/models/cities.model";
-import { CitiesHttpService } from "../../../core/service/http/cities-http.service";
-import { Action, State, StateContext, Store } from "@ngxs/store";
-import { LoadCitiesAction } from "./cities.actions";
-import { Injectable } from "@angular/core";
-import { finalize, tap } from "rxjs/operators";
+import { PagingResponse } from '../../../core/models/responses/paging.response';
+import { BasePagingState } from '../../../core/base/base-paging-state';
+import { PAGING_DEFAULT_OPTIONS } from '../../../core/constants';
+import { PagingStateModel } from '../../../core/models/paging-state.model';
+import { Cities } from '../../../core/models/cities.model';
+import { CitiesHttpService } from '../../../core/service/http/cities-http.service';
+import { Action, State, StateContext, Store } from '@ngxs/store';
+import { LoadCitiesAction } from './cities.actions';
+import { Injectable } from '@angular/core';
+import { finalize, tap } from 'rxjs/operators';
 
 export interface CitiesStateModel extends PagingStateModel<Cities> {
   pageSubject: string;
@@ -22,12 +22,12 @@ const initialState: CitiesStateModel = {
   pageIndex: 0,
   itemsLoading: false,
   itemsLoaded: false,
-  pageSubject: "",
+  pageSubject: '',
   filter: {},
 };
 
 @State<CitiesStateModel>({
-  name: "cities",
+  name: 'cities',
   defaults: initialState,
 })
 @Injectable()
@@ -79,7 +79,7 @@ export class CitiesState extends BasePagingState {
     const payload = {
       page: 1,
       limit: 20,
-      filters: "",
+      filters: '',
     };
 
     return this.citiesHttpService.getCities(payload, state.filter).pipe(

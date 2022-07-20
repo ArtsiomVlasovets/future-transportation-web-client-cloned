@@ -47,14 +47,22 @@ export const enCustomMessages = {
   exportExcel: "Export to Excel",
   exportPdf: "Export to PDF",
   createdAt: "Created At",
-  updatedAt: "Updated At"
+  updatedAt: "Updated At",
+  dashboard: "Dashboard",
+  quotes: "Quotes",
+  accounting: "Accounting",
+  crm: "CRM",
+  dataLibrary: "Data Library",
+  reports: "Reports",
+  webPortal: "Web Portal",
+  settings: "Settings",
 };
 
 // Kendo Angular Component Messages
 export const enComponentMessages = {
   // Grid
   "kendo.grid.groupPanelEmpty":
-  "Group by (Drag a column header and drop it here to group by that column):",
+    "Group by (Drag a column header and drop it here to group by that column):",
   "kendo.grid.noRecords": "No records available.",
   "kendo.grid.pagerFirstPage": "Go to the first page",
   "kendo.grid.pagerPreviousPage": "Go to the previous page",

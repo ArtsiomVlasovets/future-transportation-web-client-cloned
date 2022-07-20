@@ -17,7 +17,10 @@ const createFormGroup = (dataItem: any) =>
     name: new FormControl(dataItem.name, Validators.required),
     latitude: new FormControl(dataItem.latitude, Validators.required),
     longitude: new FormControl(dataItem.longitude, Validators.required),
-    google_map_place_id: new FormControl(dataItem.google_map_place_id, Validators.required),
+    google_map_place_id: new FormControl(
+      dataItem.google_map_place_id,
+      Validators.required
+    ),
   });
 
 const hasClass = (el: { className: string }, className: string | RegExp) =>
@@ -110,7 +113,7 @@ export class CitiesComponent {
               this.formGroup?.value,
               this.isNew,
               this.currentDataItem.id,
-              this.currentDataItem.version,
+              this.currentDataItem.version
             );
           }
         })
@@ -221,6 +224,8 @@ export class CitiesComponent {
     this.httpService.fetchCities(payload).subscribe((data) => {
       this.cities = data;
       this.gridView = [...data.items];
+      console.log("this.gridView :>> ", this.gridView);
+
       this.loading = false;
     });
   }

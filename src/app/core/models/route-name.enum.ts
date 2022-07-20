@@ -2,7 +2,15 @@ export enum RouteName {
   NotFound = "not-found",
 
   // TODO - should be changed to exact name
+  Dashboard = "dashboard",
   Portal = "portal",
+  Quotes = "quotes",
+  Accounting = "accounting",
+  CRM = "crm",
+  DataLibrary = "data-library",
+  Reports = "reports",
+  WebPortal = "web-portal",
+  Settings = "settings",
 
   Carrier = "carrier",
   CarrierProfileUpdate = "profile-update",

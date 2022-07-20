@@ -19,6 +19,7 @@ import { HeaderComponent } from "./header/header.component";
 import { TeamComponent } from "./components/team/team.component";
 import { CustomMessagesService } from "./services/custom-messages.service";
 
+// TODO will be included to import
 import {
   ExcelModule,
   GridModule,
@@ -50,15 +51,69 @@ import { ApiUrlInterceptor } from "./core/interceptors/api-url.interceptor";
 import { CommonLayoutComponent } from "./components/common-layout/common-layout.component";
 import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
 import { NgxsRouterPluginModule } from "@ngxs/router-plugin";
-import { CountriesComponent } from './components/countries/countries.component';
-import { CitiesComponent } from './components/cities/cities.component';
+import { CountriesComponent } from "./components/countries/countries.component";
+import { CitiesComponent } from "./components/cities/cities.component";
+import { CommonMenuLayoutComponent } from "./components/common-menu-layout/common-menu-layout.component";
+import { CommonTabsLayoutComponent } from "./components/common-tabs-layout/common-tabs-layout.component";
+import { StatesComponent } from "./components/states/states.component";
+import { QuotesComponent } from "./components/quotes/quotes.component";
+import { AccountingComponent } from "./components/accounting/accounting.component";
+import { CrmComponent } from "./components/crm/crm.component";
+import { ReportsComponent } from "./components/reports/reports.component";
+import { WebPortalComponent } from "./components/web-portal/web-portal.component";
+import { SettingsComponent } from "./components/settings/settings.component";
 // import { WindowDialogComponent } from './shared/components/window-dialog/window-dialog.component';
+
+const drawerRoutes = [
+  {
+    text: "Dashboard",
+    icon: "k-i-toggle-full-screen-mode",
+    path: "/dashboard",
+    selected: true,
+  },
+  {
+    text: "Quotes",
+    icon: "k-i-book",
+    path: "/quotes",
+  },
+  {
+    text: "Accounting",
+    icon: "k-i-table-properties",
+    path: "/accounting",
+  },
+  {
+    text: "CRM",
+    icon: "k-i-folder",
+    path: "/crm",
+  },
+  {
+    text: "Data Library",
+    icon: "k-i-copy",
+    path: "/data-library",
+  },
+  {
+    text: "Reports",
+    icon: "k-i-home",
+    path: "/reports",
+  },
+  { separator: true },
+  {
+    text: "Web Portal",
+    icon: "k-i-hyperlink-open",
+    path: "/web-portal",
+  },
+  { separator: true },
+  {
+    text: "Settings",
+    icon: "k-i-gear",
+    path: "/settings",
+  },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     RatingComponent,
-    DashboardComponent,
     CardComponent,
     PlanningComponent,
     ProfileComponent,
@@ -68,6 +123,18 @@ import { CitiesComponent } from './components/cities/cities.component';
     CommonPageComponent,
     CountriesComponent,
     CitiesComponent,
+    DashboardComponent,
+    StatesComponent,
+    CommonTabsLayoutComponent,
+    // CommonMenuLayoutComponent,
+    HeaderComponent,
+    CommonLayoutComponent,
+    QuotesComponent,
+    AccountingComponent,
+    CrmComponent,
+    ReportsComponent,
+    WebPortalComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +155,7 @@ import { CitiesComponent } from './components/cities/cities.component';
       ],
     }),
     NgxsRouterPluginModule.forRoot(),
+    // RouterModule.forRoot(drawerRoutes),
   ],
   providers: [
     { provide: MessageService, useClass: CustomMessagesService },
@@ -103,6 +171,7 @@ import { CitiesComponent } from './components/cities/cities.component';
       multi: true,
     },
   ],
+  exports: [HeaderComponent, CommonLayoutComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

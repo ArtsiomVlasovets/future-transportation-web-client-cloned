@@ -36,6 +36,15 @@ export class HttpService {
     });
   }
 
+  public fetchStates(payload: any): Observable<any> {
+    return this.httpClient.get<any>(`catalogs/states`, {
+      params: {
+        page: payload.page,
+        limit: payload.limit,
+      },
+    });
+  }
+
   // TODO remove
   // public remove(zone: any): void {
   //   const index = this.data.findIndex(
@@ -70,13 +79,13 @@ export class HttpService {
     formValue: any,
     isNew?: boolean,
     id?: string,
-    version?: string,
+    version?: string
   ): Observable<any> {
     const state = {
-      name: 'State',
-      id: '',
-      veriosn: ''
-    }
+      name: "State",
+      id: "",
+      veriosn: "",
+    };
 
     const payload = {
       item: {

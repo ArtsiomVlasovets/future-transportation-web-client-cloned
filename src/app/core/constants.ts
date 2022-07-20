@@ -6,25 +6,25 @@ export const ABSOLUTE_ROUTES_URLS = {
   SignIn: ["/", RouteName.Auth, RouteName.SignIn],
   CarrierProfileUpdate: [
     "/",
-    RouteName.Portal,
+    RouteName.Dashboard,
     RouteName.Carrier,
     RouteName.CarrierProfileUpdate,
   ],
   CarrierInvoices: [
     "/",
-    RouteName.Portal,
+    RouteName.Dashboard,
     RouteName.Carrier,
     RouteName.Invoices,
   ],
   FactoringСompanyInvoices: [
     "/",
-    RouteName.Portal,
+    RouteName.Dashboard,
     RouteName.FactoringCompany,
     RouteName.Invoices,
   ],
   CarrierLoadsBoard: [
     "/",
-    RouteName.Portal,
+    RouteName.Dashboard,
     RouteName.Carrier,
     RouteName.CarrierLoadsBoard,
   ],
@@ -51,4 +51,15 @@ export const NOTIFICATIONS = {
 export const PAGING_DEFAULT_OPTIONS = {
   PageSizeOptions: [5, 10, 25, 50],
   DefaultPageSize: 10,
+};
+
+export const PAGES: Record<string, string> = {
+  Dashboard: "dashboard",
+  Quotes: "quotes",
+  Accounting: "accounting",
+  CRM: "crm",
+  "Data Library": "dataLibrary",
+  Reports: "reports",
+  "Web Portal": "webPortal",
+  Settings: "settings",
 };

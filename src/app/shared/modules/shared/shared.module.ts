@@ -19,13 +19,14 @@ import { PDFModule } from "@progress/kendo-angular-scheduler";
 import { TooltipsModule } from "@progress/kendo-angular-tooltip";
 import { WindowDialogComponent } from "../../components/window-dialog/window-dialog.component";
 import { WindowModule } from "@progress/kendo-angular-dialog";
+import { MenusModule } from "@progress/kendo-angular-menu";
+import { HeaderComponent } from "./../../../header/header.component";
+import { CommonLayoutComponent } from "./../../../components/common-layout/common-layout.component";
 // TODO for loading spinner
 // import { IndicatorsModule } from "@progress/kendo-angular-indicators";
 
 @NgModule({
-  declarations: [
-    WindowDialogComponent
-  ],
+  declarations: [WindowDialogComponent],
   imports: [
     GridModule,
     PDFModule,
@@ -47,6 +48,7 @@ import { WindowModule } from "@progress/kendo-angular-dialog";
     ReactiveFormsModule,
     TooltipsModule,
     WindowModule,
+    MenusModule,
     // IndicatorsModule
   ],
   exports: [
@@ -70,7 +72,10 @@ import { WindowModule } from "@progress/kendo-angular-dialog";
     ReactiveFormsModule,
     TooltipsModule,
     WindowModule,
-    WindowDialogComponent
+    WindowDialogComponent,
+    MenusModule,
+    // HeaderComponent,
+    // CommonLayoutComponent,
     // IndicatorsModule
   ],
 })

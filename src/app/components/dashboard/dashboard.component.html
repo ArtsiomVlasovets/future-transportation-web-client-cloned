@@ -1,114 +1,764 @@
-<div class="card-container">
-    <div class="card-header-wrapper">
-        <h3 class="card-title"> {{ customMsgService.translate('teamEfficiency') }} </h3>
-        <div class="card-buttons">
-            <kendo-buttongroup selection="single">
-                <button
-                    kendoButton
-                    [toggleable]="true"
-                    [selected]="true"
-                    (click)="selectedChart = 'Trend'"
-                >
-                    {{ customMsgService.translate('trend') }}
-                </button>
-                <button
-                    kendoButton
-                    [toggleable]="true"
-                    (click)="selectedChart = 'Volume'"
-                >
-                    {{ customMsgService.translate('volume') }}
-                </button>
-            </kendo-buttongroup>
-        </div>
+<div class="wrapper">
+  <kendo-tabstrip (tabSelect)="onTabSelect($event)">
+    <kendo-tabstrip-tab title="Dispatch" [selected]="true">
+      <ng-template kendoTabContent>
+        <div class="content">
+          <div class="card-component">
+            <kendo-grid
+              #grid
+              [kendoGridBinding]="gridView"
+              kendoGridSelectBy="id"
+              [selectedKeys]="mySelection"
+              [pageSize]="10"
+              [pageable]="true"
+              [sortable]="true"
+              [groupable]="true"
+              [reorderable]="true"
+              [resizable]="true"
+              [height]="1280"
+              [columnMenu]="{ filter: true }"
+              (cellClick)="onClickEvent($event)"
+              (dblclick)="onDblClick()"
+              (add)="addHandler($event)"
+            >
+              <kendo-grid-messages
+                groupPanelEmpty="Group by column (Drag a column header and drop it here to group by that column)"
+              >
+                <label id="dedov">Password strength</label>
+              </kendo-grid-messages>
 
-        <div class="card-ranges">
-            <kendo-daterange>
-                <span class="k-icon k-i-calendar" (click)="daterange.toggle()"></span>
-                <kendo-dateinput
-                    kendoDateRangeStartInput
-                    (valueChange)="fromDate($event)"
-                    [(value)]="dateRange.start"
-                    format="dd/MM/yy"
-                ></kendo-dateinput>
-                <span> - </span>
-                <kendo-dateinput
-                    kendoDateRangeEndInput
-                    (valueChange)="toDate($event)"
-                    [(value)]="dateRange.end"
-                    format="dd/MM/yy"
-                ></kendo-dateinput>
-                <kendo-daterange-popup #daterange></kendo-daterange-popup>
-            </kendo-daterange>
-        </div>
-    </div>
+              <kendo-grid-checkbox-column
+                class="k-grid-ignore-click"
+                [width]="40"
+                [headerClass]="{ 'text-center': true }"
+                [class]="{ 'text-center': true }"
+                [resizable]="true"
+                [columnMenu]="false"
+                [showSelectAll]="true"
+              >
+              </kendo-grid-checkbox-column>
 
-    <div class="card-component">
-        <kendo-chart *ngIf="selectedChart === 'Trend'">
-            <kendo-chart-category-axis>
-                <kendo-chart-category-axis-item
-                    [categories]="categories"
-                    [baseUnit]="'months'"
-                    [min]="dateRange.start"
-                    [max]="dateRange.end"
-                    [labels]="{ format: 'MMMM yyyy', rotation: 'auto' }"
+              <ng-template kendoGridToolbarTemplate>
+                <!-- <button kendoGridAddCommand *ngIf="!formGroup">
+                  Add <span class="k-icon k-i-plus"></span>
+                </button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Edit <span class="k-icon k-i-pencil k-flip-v"></span></button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Delete <span class="k-icon k-i-close"></span></button> -->
+              </ng-template>
+
+              <!-- <kendo-grid-column-group
+                *ngIf="!loading"
+                title="customMsgService.translate('zones')"
+                [columnMenu]="false"
+              > -->
+              <kendo-grid-column field="number" title="Number" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_date"
+                title="Ship date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.pickup_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_time"
+                title="Ship time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_date"
+                title="Del date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.delivery_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_time"
+                title="Del time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="carrier" title="Carrier" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="customer" title="Bill to" [width]="320">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="shipper" title="Origin" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_city"
+                title="OCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_state"
+                title="OState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="consignee"
+                title="Destination"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_city"
+                title="DCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_state"
+                title="DState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="shipper_po"
+                title="Shipper PO"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="tri_number" title="Tri #" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="comment" title="Notes" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="dispatcher"
+                title="Dispatcher"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="status" title="Status" [width]="220">
+              </kendo-grid-column>
+
+              <!-- <kendo-grid-command-column title="command" [width]="140">
+                <ng-template
+                  kendoGridCellTemplate
+                  let-isNew="isNew"
+                  let-dataItem
+                  let-rowIndex="rowIndex"
                 >
-                </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-legend
-                position="bottom"
-                orientation="horizontal"
-                background="#f4f5f8"
-                [spacing]="140"
-                [padding]="{ left: 80, right: 80 }"
-            ></kendo-chart-legend>
-            <kendo-chart-tooltip>
-                <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
-                    {{ intl.formatDate(category, 'MMMM yyyy').toUpperCase() }}
-                    <br />
-                    <div class="chart-tooltip"> {{ intl.formatNumber(value, 'n3') }} </div>
+                  <button
+                    kendoGridEditCommand
+                    type="button"
+                    (click)="editClick(rowIndex, dataItem)"
+                    [primary]="true"
+                  >
+                    Edit <span class="k-icon k-i-pencil k-flip-v"></span>
+                  </button>
+                  <button kendoGridRemoveCommand type="button">
+                    Remove <span class="k-icon k-i-close"></span>
+                  </button>
+                  <button
+                    kendoGridSaveCommand
+                    type="button"
+                    (click)="saveCurrent()"
+                    [disabled]="!!formGroup?.invalid"
+                  >
+                    {{ isNew ? "Save" : "Update" }}
+                    <span
+                      *ngIf="isNew; else saveIcon"
+                      class="k-icon k-i-save k-i-floppy"
+                    ></span>
+                    <ng-template #saveIcon>
+                      <span class="k-icon k-i-save k-i-floppy"></span>
+                    </ng-template>
+                  </button>
+                  <button
+                    kendoGridCancelCommand
+                    type="button"
+                    (click)="cancelHandler()"
+                  >
+                    {{ isNew ? "Cancel" : "Discard changes" }}
+                    <span class="k-icon k-i-cancel-outline"></span>
+                  </button>
                 </ng-template>
-            </kendo-chart-tooltip>
-            <kendo-chart-series>
-                <kendo-chart-series-item *ngFor="let item of series" type="line" [data]="item.data" [name]="item.name">
-                </kendo-chart-series-item>
-            </kendo-chart-series>
-        </kendo-chart>
+              </kendo-grid-command-column> -->
+              <!-- </kendo-grid-column-group> -->
 
-        <kendo-chart *ngIf="selectedChart === 'Volume'">
-            <kendo-chart-category-axis>
-                <kendo-chart-category-axis-item
-                    [categories]="categories"
-                    [baseUnit]="'months'"
-                    [min]="dateRange.start"
-                    [max]="dateRange.end"
-                    [labels]="{ format: 'MMMM yyyy' }"
+              <!-- TODO - add loading spinner -->
+              <!-- <ng-template #spinner>
+                <div class="k-block">
+                  <kendo-loader
+                    [type]="loader.type"
+                    [themeColor]="loader.themeColor"
+                    [size]="loader.size"
+                  >
+                  </kendo-loader>
+                </div>
+              </ng-template> -->
+              <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+            </kendo-grid>
+
+            <!-- <app-window-dialog
+              #windowDialog
+              *ngIf="windowOpen"
+              [width]="500"
+              [minHeight]="210"
+              title="Edit Confirmation"
+              (close)="close()"
+            >
+              <p>"Save changes?</p>
+
+              <kendo-dialog-actions>
+                <button kendoButton (click)="no()">No</button>
+                <button kendoButton (click)="yes()" [primary]="true">
+                  Yes
+                </button>
+                <button kendoButton (click)="cancelPopup()">cancel</button>
+              </kendo-dialog-actions>
+            </app-window-dialog> -->
+          </div>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab title="Tracing">
+      <ng-template kendoTabContent>
+        <div class="content">
+          <div class="card-component">
+            <kendo-grid
+              #grid
+              [kendoGridBinding]="gridView"
+              kendoGridSelectBy="id"
+              [selectedKeys]="mySelection"
+              [pageSize]="10"
+              [pageable]="true"
+              [sortable]="true"
+              [groupable]="true"
+              [reorderable]="true"
+              [resizable]="true"
+              [height]="480"
+              [columnMenu]="{ filter: true }"
+              (cellClick)="onClickEvent($event)"
+              (dblclick)="onDblClick()"
+              (add)="addHandler($event)"
+            >
+              <kendo-grid-messages
+                groupPanelEmpty="Group by column (Drag a column header and drop it here to group by that column)"
+              >
+                <label id="dedov">Password strength</label>
+              </kendo-grid-messages>
+
+              <kendo-grid-checkbox-column
+                class="k-grid-ignore-click"
+                [width]="40"
+                [headerClass]="{ 'text-center': true }"
+                [class]="{ 'text-center': true }"
+                [resizable]="true"
+                [columnMenu]="false"
+                [showSelectAll]="true"
+              >
+              </kendo-grid-checkbox-column>
+
+              <ng-template kendoGridToolbarTemplate>
+                <!-- <button kendoGridAddCommand *ngIf="!formGroup">
+                      Add <span class="k-icon k-i-plus"></span>
+                    </button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Edit <span class="k-icon k-i-pencil k-flip-v"></span></button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Delete <span class="k-icon k-i-close"></span></button> -->
+              </ng-template>
+
+              <kendo-grid-column
+                field="pickup_date"
+                title="On Schedule"
+                [width]="200"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.pickup_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_time"
+                title="At the PU"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="comment"
+                title="Picked up"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <!-- <kendo-grid-column-group
+                    *ngIf="!loading"
+                    title="customMsgService.translate('zones')"
+                    [columnMenu]="false"
+                  > -->
+              <kendo-grid-column field="number" title="Number" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_date"
+                title="Ship date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.pickup_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_time"
+                title="Ship time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_date"
+                title="Del date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.delivery_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_time"
+                title="Del time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="carrier" title="Carrier" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="customer" title="Bill to" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="shipper" title="Origin" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_city"
+                title="OCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_state"
+                title="OState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="consignee"
+                title="Destination"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_city"
+                title="DCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_state"
+                title="DState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="shipper_po"
+                title="Shipper PO"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="tri_number" title="Tri #" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="comment" title="Notes" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="dispatcher"
+                title="Dispatcher"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="status" title="Status" [width]="220">
+              </kendo-grid-column>
+
+              <!-- <kendo-grid-command-column title="command" [width]="140">
+                    <ng-template
+                      kendoGridCellTemplate
+                      let-isNew="isNew"
+                      let-dataItem
+                      let-rowIndex="rowIndex"
+                    >
+                      <button
+                        kendoGridEditCommand
+                        type="button"
+                        (click)="editClick(rowIndex, dataItem)"
+                        [primary]="true"
+                      >
+                        Edit <span class="k-icon k-i-pencil k-flip-v"></span>
+                      </button>
+                      <button kendoGridRemoveCommand type="button">
+                        Remove <span class="k-icon k-i-close"></span>
+                      </button>
+                      <button
+                        kendoGridSaveCommand
+                        type="button"
+                        (click)="saveCurrent()"
+                        [disabled]="!!formGroup?.invalid"
+                      >
+                        {{ isNew ? "Save" : "Update" }}
+                        <span
+                          *ngIf="isNew; else saveIcon"
+                          class="k-icon k-i-save k-i-floppy"
+                        ></span>
+                        <ng-template #saveIcon>
+                          <span class="k-icon k-i-save k-i-floppy"></span>
+                        </ng-template>
+                      </button>
+                      <button
+                        kendoGridCancelCommand
+                        type="button"
+                        (click)="cancelHandler()"
+                      >
+                        {{ isNew ? "Cancel" : "Discard changes" }}
+                        <span class="k-icon k-i-cancel-outline"></span>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-command-column> -->
+              <!-- </kendo-grid-column-group> -->
+
+              <!-- TODO - add loading spinner -->
+              <!-- <ng-template #spinner>
+                    <div class="k-block">
+                      <kendo-loader
+                        [type]="loader.type"
+                        [themeColor]="loader.themeColor"
+                        [size]="loader.size"
+                      >
+                      </kendo-loader>
+                    </div>
+                  </ng-template> -->
+              <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+            </kendo-grid>
+
+            <!-- <app-window-dialog
+                  #windowDialog
+                  *ngIf="windowOpen"
+                  [width]="500"
+                  [minHeight]="210"
+                  title="Edit Confirmation"
+                  (close)="close()"
                 >
-                </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-legend
-                position="bottom"
-                orientation="horizontal"
-                background="#f4f5f8"
-                [spacing]="140"
-                [padding]="{ left: 80, right: 80 }"
-            ></kendo-chart-legend>
-            <kendo-chart-tooltip>
-                <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-category="category">
-                    {{ intl.formatDate(category, 'MMMM yyyy').toUpperCase() }}
-                    <br />
-                    <div class="chart-tooltip"> {{ intl.formatNumber(value, 'n3') }} </div>
-                </ng-template>
-            </kendo-chart-tooltip>
-            <kendo-chart-series>
-                <kendo-chart-series-item
-                    *ngFor="let item of series"
-                    type="column"
-                    [data]="item.data"
-                    [name]="item.name"
-                    [color]="item.color"
+                  <p>"Save changes?</p>
+    
+                  <kendo-dialog-actions>
+                    <button kendoButton (click)="no()">No</button>
+                    <button kendoButton (click)="yes()" [primary]="true">
+                      Yes
+                    </button>
+                    <button kendoButton (click)="cancelPopup()">cancel</button>
+                  </kendo-dialog-actions>
+                </app-window-dialog> -->
+          </div>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab title="Schedule">
+      <ng-template kendoTabContent>
+        <div class="content">
+          <div class="card-component">
+            <kendo-grid
+              #grid
+              [kendoGridBinding]="gridView"
+              kendoGridSelectBy="id"
+              [selectedKeys]="mySelection"
+              [pageSize]="10"
+              [pageable]="true"
+              [sortable]="true"
+              [groupable]="true"
+              [reorderable]="true"
+              [resizable]="true"
+              [height]="480"
+              [columnMenu]="{ filter: true }"
+              (cellClick)="onClickEvent($event)"
+              (dblclick)="onDblClick()"
+              (add)="addHandler($event)"
+            >
+              <kendo-grid-messages
+                groupPanelEmpty="Group by column (Drag a column header and drop it here to group by that column)"
+              >
+                <label id="dedov">Password strength</label>
+              </kendo-grid-messages>
+
+              <kendo-grid-checkbox-column
+                class="k-grid-ignore-click"
+                [width]="40"
+                [headerClass]="{ 'text-center': true }"
+                [class]="{ 'text-center': true }"
+                [resizable]="true"
+                [columnMenu]="false"
+                [showSelectAll]="true"
+              >
+              </kendo-grid-checkbox-column>
+
+              <ng-template kendoGridToolbarTemplate>
+                <!-- <button kendoGridAddCommand *ngIf="!formGroup">
+                      Add <span class="k-icon k-i-plus"></span>
+                    </button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Edit <span class="k-icon k-i-pencil k-flip-v"></span></button> -->
+                <!-- <button kendoGridEditCommand *ngIf="!formGroup">Delete <span class="k-icon k-i-close"></span></button> -->
+              </ng-template>
+
+              <!-- <kendo-grid-column-group
+                    *ngIf="!loading"
+                    title="customMsgService.translate('zones')"
+                    [columnMenu]="false"
+                  > -->
+              <kendo-grid-column field="number" title="Number" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_date"
+                title="Ship date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.pickup_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_time"
+                title="Ship time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_date"
+                title="Del date"
+                [width]="150"
+                [class]="{ 'text-center': true }"
+                [resizable]="false"
+              >
+                <ng-container>
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.delivery_date | date }}
+                  </ng-template>
+                </ng-container>
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_time"
+                title="Del time"
+                [width]="150"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="carrier" title="Carrier" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="customer" title="Bill to" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="shipper" title="Origin" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_city"
+                title="OCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="pickup_state"
+                title="OState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="consignee"
+                title="Destination"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_city"
+                title="DCity"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="delivery_state"
+                title="DState"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="shipper_po"
+                title="Shipper PO"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="tri_number" title="Tri #" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column field="comment" title="Notes" [width]="220">
+              </kendo-grid-column>
+
+              <kendo-grid-column
+                field="dispatcher"
+                title="Dispatcher"
+                [width]="220"
+              >
+              </kendo-grid-column>
+
+              <kendo-grid-column field="status" title="Status" [width]="220">
+              </kendo-grid-column>
+
+              <!-- <kendo-grid-command-column title="command" [width]="140">
+                    <ng-template
+                      kendoGridCellTemplate
+                      let-isNew="isNew"
+                      let-dataItem
+                      let-rowIndex="rowIndex"
+                    >
+                      <button
+                        kendoGridEditCommand
+                        type="button"
+                        (click)="editClick(rowIndex, dataItem)"
+                        [primary]="true"
+                      >
+                        Edit <span class="k-icon k-i-pencil k-flip-v"></span>
+                      </button>
+                      <button kendoGridRemoveCommand type="button">
+                        Remove <span class="k-icon k-i-close"></span>
+                      </button>
+                      <button
+                        kendoGridSaveCommand
+                        type="button"
+                        (click)="saveCurrent()"
+                        [disabled]="!!formGroup?.invalid"
+                      >
+                        {{ isNew ? "Save" : "Update" }}
+                        <span
+                          *ngIf="isNew; else saveIcon"
+                          class="k-icon k-i-save k-i-floppy"
+                        ></span>
+                        <ng-template #saveIcon>
+                          <span class="k-icon k-i-save k-i-floppy"></span>
+                        </ng-template>
+                      </button>
+                      <button
+                        kendoGridCancelCommand
+                        type="button"
+                        (click)="cancelHandler()"
+                      >
+                        {{ isNew ? "Cancel" : "Discard changes" }}
+                        <span class="k-icon k-i-cancel-outline"></span>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-command-column> -->
+              <!-- </kendo-grid-column-group> -->
+
+              <!-- TODO - add loading spinner -->
+              <!-- <ng-template #spinner>
+                    <div class="k-block">
+                      <kendo-loader
+                        [type]="loader.type"
+                        [themeColor]="loader.themeColor"
+                        [size]="loader.size"
+                      >
+                      </kendo-loader>
+                    </div>
+                  </ng-template> -->
+              <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+            </kendo-grid>
+
+            <!-- <app-window-dialog
+                  #windowDialog
+                  *ngIf="windowOpen"
+                  [width]="500"
+                  [minHeight]="210"
+                  title="Edit Confirmation"
+                  (close)="close()"
                 >
-                </kendo-chart-series-item>
-            </kendo-chart-series>
-        </kendo-chart>
-    </div>
+                  <p>"Save changes?</p>
+    
+                  <kendo-dialog-actions>
+                    <button kendoButton (click)="no()">No</button>
+                    <button kendoButton (click)="yes()" [primary]="true">
+                      Yes
+                    </button>
+                    <button kendoButton (click)="cancelPopup()">cancel</button>
+                  </kendo-dialog-actions>
+                </app-window-dialog> -->
+          </div>
+        </div>
+      </ng-template>
+    </kendo-tabstrip-tab>
+  </kendo-tabstrip>
 </div>
