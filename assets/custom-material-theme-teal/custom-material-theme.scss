@@ -1,0 +1,9 @@
+@import "variables";
+
+$border-radius: 2px;
+$primary-palette-name: brown;
+$secondary-palette-name: amber;
+$theme-type: light;
+$adjust-contrast: true;
+
+@import "~@progress/kendo-theme-material/dist/all.scss";
